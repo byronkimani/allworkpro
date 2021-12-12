@@ -23,7 +23,7 @@ class _AppWidgetState extends State<AppWidget> {
         title: appName,
         theme: apptheme,
         initialRoute: FirebaseAuth.instance.currentUser == null
-            ? loginPageRoute
+            ? welcomePageRoute
             : homePageRoute,
         onGenerateRoute: appRouter.onGenerateRoute,
       ),

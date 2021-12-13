@@ -1,5 +1,6 @@
 import 'package:allworkpro/presentation/features/error/page_not_found.dart';
 import 'package:allworkpro/presentation/features/home/pages/home_page.dart';
+import 'package:allworkpro/presentation/features/onboarding/pages/additional_information_page.dart';
 import 'package:allworkpro/presentation/features/onboarding/pages/create_account_page.dart';
 import 'package:allworkpro/presentation/features/onboarding/pages/login_page.dart';
 import 'package:allworkpro/presentation/features/onboarding/pages/onboarding_pages.dart';
@@ -28,6 +29,11 @@ class AppRouter {
       case createAccountPageRoute:
         return MaterialPageRoute<CreateAccountPage>(
           builder: (_) => const CreateAccountPage(),
+        );
+
+      case additionalInfoRoute:
+        return MaterialPageRoute<AdditionalInfoPage>(
+          builder: (_) => const AdditionalInfoPage(),
         );
 
       case homePageRoute:

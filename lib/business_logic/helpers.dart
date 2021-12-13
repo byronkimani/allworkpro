@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 User? firebaseUser;
 Users? userCurrentInfo;
+User? currentFirebaseUser;
 
 String? validateEmail(String? input) {
   if (input != null || input!.isNotEmpty) {
@@ -63,6 +64,17 @@ String? validatePhoneNumber(String? input) {
     }
   }
   return pleaseInputValidPhone;
+}
+
+String? validateIDNumber(String? input) {
+  if (input is! num) {
+    if (input!.length > 6) {
+      return null;
+    } else {
+      return pleaseInputIDNumber;
+    }
+  }
+  return pleaseInputIDNumber;
 }
 
 void displaytoastMessage({required String message}) {

@@ -49,23 +49,25 @@ Future<void> registerNewUser({
     displaytoastMessage(message: e.toString());
     return;
   }
+  currentFirebaseUser = userCredential.user;
   Navigator.of(context).pop();
   displaytoastMessage(message: 'Account created successfully!');
 
+  // add user account id to collection
   // ignore: unnecessary_null_comparison
   if (userCredential != null) {
-    // ignore: always_specify_types
-    final CollectionReference users =
-        FirebaseFirestore.instance.collection('users');
-    users.doc(userCredential.user!.uid).set(<String, dynamic>{
+    final CollectionReference<Object> drivers =
+        FirebaseFirestore.instance.collection('drivers');
+
+    drivers.doc(userCredential.user!.uid).set(<String, dynamic>{
       'name': name,
       'phoneNumber': phoneNumber,
       'email': email,
     }).then(
       (_) {
-        // success case
+        // sucess
         displaytoastMessage(message: accountCreatedSuccess);
-        Navigator.of(context).pushReplacementNamed(homePageRoute);
+        Navigator.of(context).pushReplacementNamed(additionalInfoRoute);
       },
     ).catchError(
       (dynamic error) {
@@ -107,4 +109,24 @@ Future<void> signInWithEmailAndPass({
   }
   displaytoastMessage(message: 'Logged in successfully');
   Navigator.of(context).pushReplacementNamed(homePageRoute);
+}
+
+Future<void> addExtraInformation({
+  required Map<String, dynamic> data,
+  required BuildContext context,
+}) async {
+  final String userId = currentFirebaseUser!.uid;
+  final CollectionReference<Object> drivers =
+      FirebaseFirestore.instance.collection('drivers');
+
+  drivers.doc(userId).update(data).then(
+    (_) {
+      displaytoastMessage(message: informationAddtionSuccess);
+      Navigator.of(context).pushReplacementNamed(homePageRoute);
+    },
+  ).catchError(
+    (dynamic error) {
+      displaytoastMessage(message: errorOccurred);
+    },
+  );
 }

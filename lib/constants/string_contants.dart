@@ -43,6 +43,7 @@ const String pleaseEnterName = 'Please enter name';
 const String pleaseEnterDescription = 'Please enter description';
 const String pleaseEnterField = 'Please fill up this field';
 const String pleaseInputValidPhone = 'Please input a valid phone number';
+const String pleaseInputIDNumber = 'Please input ID phone number';
 
 // validate email regex
 const String emailRegex =
@@ -54,3 +55,11 @@ const String phoneRegex =
 // registration page
 const String accountCreatedSuccess =
     'Congratulations account created successfully!';
+
+// additonal info page
+const String additionalInfoTitle = 'Additional Information';
+const String addtionalInfoSubtitle = 'Just some quick info from you!';
+const String addtionalInfoCoHint =
+    'We need this info in order to ensure safety of our platform';
+const String errorOccurred = 'Sorry an error occurred while adding data';
+const String informationAddtionSuccess = 'Information added successfully';

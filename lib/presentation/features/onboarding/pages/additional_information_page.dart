@@ -1,12 +1,11 @@
 import 'package:allworkpro/constants/string_contants.dart';
 import 'package:allworkpro/constants/theme.dart';
+import 'package:allworkpro/presentation/features/onboarding/widgets/additional_information_form.dart';
 import 'package:allworkpro/presentation/features/onboarding/widgets/onboarding_pages_background.dart';
-import 'package:allworkpro/presentation/features/onboarding/widgets/registration_form.dart';
-import 'package:allworkpro/presentation/router/routes.dart';
 import 'package:flutter/material.dart';
 
-class CreateAccountPage extends StatelessWidget {
-  const CreateAccountPage();
+class AdditionalInfoPage extends StatelessWidget {
+  const AdditionalInfoPage();
 
   @override
   Widget build(BuildContext context) {
@@ -32,38 +31,32 @@ class CreateAccountPage extends StatelessWidget {
               ),
             ),
             child: ListView(
-              children: <Widget>[
-                const Text(
-                  createAccount,
+              children: const <Widget>[
+                Text(
+                  additionalInfoTitle,
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w900,
                     color: accentColor,
                   ),
                 ),
-                const SizedBox(height: 5),
-                const Text(
-                  createAccountTitle,
+                SizedBox(height: 5),
+                Text(
+                  addtionalInfoSubtitle,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     color: accentColor,
                   ),
                 ),
-                const SizedBox(height: 5),
-                const Text(
-                  createAccountSubtitle,
+                SizedBox(height: 5),
+                Text(
+                  addtionalInfoCoHint,
                   style: TextStyle(
-                    fontSize: 16,
                     color: accentColor,
                   ),
                 ),
-                const SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () =>
-                      Navigator.of(context).pushNamed(additionalInfoRoute),
-                  child: const Text('Tap'),
-                ),
-                const RegistrationForm()
+                SizedBox(height: 10),
+                AdditionalInformationForm()
               ],
             ),
           )

@@ -14,11 +14,12 @@ Future<void> registerNewUser({
   required String password,
 }) async {
   showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return const ProgressDialog(message: 'Creating your account');
-      });
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return const ProgressDialog(message: 'Creating your account');
+    },
+  );
   final FirebaseAuth auth = FirebaseAuth.instance;
   UserCredential? userCredential;
   try {
@@ -34,8 +35,13 @@ Future<void> registerNewUser({
     } else if (e.code == 'email-already-in-use') {
       Navigator.of(context).pop();
       displaytoastMessage(
-        message: 'The account already exists for that email.',
+        message:
+            'The account already exists for that email. Please try loggin in.',
       );
+      return;
+    } else {
+      Navigator.of(context).pop();
+      displaytoastMessage(message: e.toString());
       return;
     }
   } catch (e) {
@@ -46,6 +52,7 @@ Future<void> registerNewUser({
   Navigator.of(context).pop();
   displaytoastMessage(message: 'Account created successfully!');
 
+  // ignore: unnecessary_null_comparison
   if (userCredential != null) {
     // ignore: always_specify_types
     final CollectionReference users =
@@ -56,6 +63,7 @@ Future<void> registerNewUser({
       'email': email,
     }).then(
       (_) {
+        // success case
         displaytoastMessage(message: accountCreatedSuccess);
         Navigator.of(context).pushReplacementNamed(homePageRoute);
       },
@@ -65,7 +73,7 @@ Future<void> registerNewUser({
       },
     );
   } else {
-    displaytoastMessage(message: 'New user account not created');
+    displaytoastMessage(message: 'New user account not created.');
   }
 }
 

@@ -44,7 +44,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAQzwHC9t9nTVIjXmEoJZOfj01t8EOj59E',
+    apiKey: 'AIzaSyDJrXvZLIm3k-UsUjNfjwxzi1R45zBSsvE',
     appId: '1:1053358676695:android:4b2dcc91b226c0c58bae92',
     messagingSenderId: '1053358676695',
     projectId: 'allwork-gigfinder',

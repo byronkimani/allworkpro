@@ -21,8 +21,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
 
   @override
   Widget build(BuildContext context) {
-    final MediaQueryData mediaQuery = MediaQuery.of(context);
-
     return Form(
       key: formKey,
       child: Padding(
@@ -92,7 +90,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(
-                    horizontal: mediaQuery.size.width * 0.15, vertical: 15),
+                  horizontal: MediaQuery.of(context).size.width * 0.15,
+                  vertical: 15,
+                ),
               ),
               child: const Text(
                 createAccount,

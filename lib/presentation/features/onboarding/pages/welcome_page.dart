@@ -1,4 +1,3 @@
-
 import 'package:allworkpro/constants/string_contants.dart';
 import 'package:allworkpro/constants/theme.dart';
 import 'package:allworkpro/presentation/router/routes.dart';
@@ -41,6 +40,7 @@ class WelcomePage extends StatelessWidget {
                 children: <Widget>[
                   const Text(
                     appName,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: whiteColor,
                       fontSize: 50,

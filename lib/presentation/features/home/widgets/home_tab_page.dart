@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:allworkpro/constants/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -16,6 +17,7 @@ class _HomeTabPageState extends State<HomeTabPage> {
   Position? currentPosition;
   Geolocator geolocator = Geolocator();
   GoogleMapController? newGoogleMapController;
+  bool onlineStatus = false;
 
   static const CameraPosition _cameraPosition = CameraPosition(
     target: LatLng(-1.181056, 36.927234),
@@ -65,6 +67,36 @@ class _HomeTabPageState extends State<HomeTabPage> {
             locatePosition();
           },
         ),
+
+        // online offline container
+        Positioned(
+          top: 20,
+          left: 20,
+          child: Container(
+            color: whiteColor,
+            height: 50,
+            width: 150,
+            child: Row(
+              children: <Widget>[
+                Switch(
+                  value: onlineStatus,
+                  onChanged: (bool v) {
+                    setState(() {
+                      onlineStatus = v;
+                    });
+                  },
+                ),
+                Text(
+                  onlineStatus ? 'Online' : 'Offline',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: onlineStatus ? accentColor : Colors.grey,
+                  ),
+                )
+              ],
+            ),
+          ),
+        )
       ],
     );
   }

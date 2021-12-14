@@ -46,7 +46,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
             ),
             // phone number
             TextFormField(
-              keyboardType: TextInputType.text,
+              keyboardType: TextInputType.number,
               decoration: inputDecoration.copyWith(labelText: 'Phone Number'),
               style: const TextStyle(fontSize: 14),
               validator: (String? number) =>

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:allworkpro/business_logic/helpers.dart';
 import 'package:allworkpro/constants/string_contants.dart';
 import 'package:allworkpro/presentation/core/progress_dialog.dart';
@@ -8,6 +10,15 @@ import 'package:flutter/material.dart';
 
 final DatabaseReference providersRef =
     FirebaseDatabase.instance.ref().child('providers');
+
+final DatabaseReference usersRef =
+    FirebaseDatabase.instance.ref().child('users');
+
+DatabaseReference? serviceRequestRef = FirebaseDatabase.instance
+    .ref()
+    .child('providers')
+    .child(FirebaseAuth.instance.currentUser!.uid)
+    .child('newRequest');
 
 Future<void> registerNewUser({
   required BuildContext context,
@@ -52,7 +63,6 @@ Future<void> registerNewUser({
     displaytoastMessage(message: e.toString());
     return;
   }
-  currentFirebaseUser = userCredential.user;
   Navigator.of(context).pop();
   displaytoastMessage(message: 'Account created successfully!');
 
@@ -67,7 +77,7 @@ Future<void> registerNewUser({
 
     await providersRef.child(userCredential.user!.uid).set(userData);
     displaytoastMessage(message: accountCreatedSuccess);
-    Navigator.of(context).pushReplacementNamed(homePageRoute);
+    Navigator.of(context).pushReplacementNamed(additionalInfoRoute);
   } else {
     displaytoastMessage(message: 'New user account not created');
   }
@@ -84,8 +94,10 @@ Future<void> signInWithEmailAndPass({
       builder: (BuildContext context) {
         return const ProgressDialog(message: 'Logging you in...');
       });
+  UserCredential? userCredential;
+
   try {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
+    userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
@@ -101,15 +113,30 @@ Future<void> signInWithEmailAndPass({
       return;
     }
   }
-  displaytoastMessage(message: 'Logged in successfully');
-  Navigator.of(context).pushReplacementNamed(homePageRoute);
+  if (userCredential!.user != null) {
+    providersRef
+        .child(userCredential.user!.uid)
+        .once()
+        .then((DatabaseEvent databaseEvent) async {
+      if (databaseEvent.snapshot.value != null) {
+        displaytoastMessage(message: 'Logged in successfully');
+        Navigator.of(context).pushReplacementNamed(homePageRoute);
+      } else {
+        Navigator.of(context).pushReplacementNamed(loginPageRoute);
+        await FirebaseAuth.instance.signOut();
+        displaytoastMessage(
+            message:
+                'No record for this user exists. Please try creating a new account');
+      }
+    });
+  }
 }
 
 Future<void> addExtraInformation({
   required Map<String, dynamic> data,
   required BuildContext context,
 }) async {
-  final String userId = currentFirebaseUser!.uid;
+  final String userId = FirebaseAuth.instance.currentUser!.uid;
   final DatabaseReference ref =
       FirebaseDatabase.instance.ref('providers/$userId');
 

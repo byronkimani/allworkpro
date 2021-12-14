@@ -2,7 +2,6 @@ import 'package:allworkpro/constants/string_contants.dart';
 import 'package:allworkpro/constants/theme.dart';
 import 'package:allworkpro/presentation/features/onboarding/widgets/onboarding_pages_background.dart';
 import 'package:allworkpro/presentation/features/onboarding/widgets/registration_form.dart';
-import 'package:allworkpro/presentation/router/routes.dart';
 import 'package:flutter/material.dart';
 
 class CreateAccountPage extends StatelessWidget {
@@ -32,8 +31,8 @@ class CreateAccountPage extends StatelessWidget {
               ),
             ),
             child: ListView(
-              children: <Widget>[
-                const Text(
+              children: const <Widget>[
+                Text(
                   createAccount,
                   style: TextStyle(
                     fontSize: 30,
@@ -41,29 +40,24 @@ class CreateAccountPage extends StatelessWidget {
                     color: accentColor,
                   ),
                 ),
-                const SizedBox(height: 5),
-                const Text(
+                SizedBox(height: 5),
+                Text(
                   createAccountTitle,
                   style: TextStyle(
                     fontSize: 20,
                     color: accentColor,
                   ),
                 ),
-                const SizedBox(height: 5),
-                const Text(
+                SizedBox(height: 5),
+                Text(
                   createAccountSubtitle,
                   style: TextStyle(
                     fontSize: 16,
                     color: accentColor,
                   ),
                 ),
-                const SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () =>
-                      Navigator.of(context).pushNamed(additionalInfoRoute),
-                  child: const Text('Tap'),
-                ),
-                const RegistrationForm()
+                SizedBox(height: 10),
+                RegistrationForm()
               ],
             ),
           )

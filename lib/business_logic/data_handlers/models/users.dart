@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class Users {
   Users({
@@ -13,13 +13,12 @@ class Users {
   String? name;
   String? phone;
 
-  Users.fromSnapshot(DocumentSnapshot<Object?> documentSnapshot) {
-    id = documentSnapshot.id;
-    email =
-        (documentSnapshot.data()! as Map<String, dynamic>)['email'].toString();
-    name =
-        (documentSnapshot.data()! as Map<String, dynamic>)['name'].toString();
-    phone =
-        (documentSnapshot.data()! as Map<String, dynamic>)['phone'].toString();
+  Users.fromSnapshot(DataSnapshot dataSnapshot) {
+    Users(
+      id: dataSnapshot.key,
+      email: (dataSnapshot.value as Map<String, dynamic>?)!['email'] as String,
+      name: (dataSnapshot.value as Map<String, dynamic>?)!['name'] as String,
+      phone: (dataSnapshot.value as Map<String, dynamic>?)!['phone'] as String,
+    );
   }
 }

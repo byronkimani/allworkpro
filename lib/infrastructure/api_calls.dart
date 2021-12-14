@@ -2,9 +2,12 @@ import 'package:allworkpro/business_logic/helpers.dart';
 import 'package:allworkpro/constants/string_contants.dart';
 import 'package:allworkpro/presentation/core/progress_dialog.dart';
 import 'package:allworkpro/presentation/router/routes.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+
+final DatabaseReference providersRef =
+    FirebaseDatabase.instance.ref().child('providers');
 
 Future<void> registerNewUser({
   required BuildContext context,
@@ -56,26 +59,17 @@ Future<void> registerNewUser({
   // add user account id to collection
   // ignore: unnecessary_null_comparison
   if (userCredential != null) {
-    final CollectionReference<Object> drivers =
-        FirebaseFirestore.instance.collection('drivers');
-
-    drivers.doc(userCredential.user!.uid).set(<String, dynamic>{
+    final Map<String, dynamic> userData = <String, dynamic>{
       'name': name,
       'phoneNumber': phoneNumber,
       'email': email,
-    }).then(
-      (_) {
-        // sucess
-        displaytoastMessage(message: accountCreatedSuccess);
-        Navigator.of(context).pushReplacementNamed(additionalInfoRoute);
-      },
-    ).catchError(
-      (dynamic error) {
-        displaytoastMessage(message: 'Failed to add user');
-      },
-    );
+    };
+
+    await providersRef.child(userCredential.user!.uid).set(userData);
+    displaytoastMessage(message: accountCreatedSuccess);
+    Navigator.of(context).pushReplacementNamed(homePageRoute);
   } else {
-    displaytoastMessage(message: 'New user account not created.');
+    displaytoastMessage(message: 'New user account not created');
   }
 }
 
@@ -116,17 +110,10 @@ Future<void> addExtraInformation({
   required BuildContext context,
 }) async {
   final String userId = currentFirebaseUser!.uid;
-  final CollectionReference<Object> drivers =
-      FirebaseFirestore.instance.collection('drivers');
+  final DatabaseReference ref =
+      FirebaseDatabase.instance.ref('providers/$userId');
 
-  drivers.doc(userId).update(data).then(
-    (_) {
-      displaytoastMessage(message: informationAddtionSuccess);
-      Navigator.of(context).pushReplacementNamed(homePageRoute);
-    },
-  ).catchError(
-    (dynamic error) {
-      displaytoastMessage(message: errorOccurred);
-    },
-  );
+  await ref.update(data);
+  displaytoastMessage(message: informationAddtionSuccess);
+  Navigator.of(context).pushReplacementNamed(homePageRoute);
 }

@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage>
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        unselectedItemColor: Colors.black54,
+        unselectedItemColor: accentColor,
         selectedItemColor: primaryColor,
         type: BottomNavigationBarType.fixed,
         selectedLabelStyle: const TextStyle(fontSize: 12),
